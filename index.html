@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Un Detalle Especial para mi chupete</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #161e2e;
+      --text-color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #3b82f6;
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #a0aec0;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Escenario del Ramo */
+    .bouquet-container {
+      position: relative;
+      width: 380px;
+      height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-bottom: 25px;
+    }
+
+    /* Punto base donde se juntan las tarjetas */
+    .cards-wrapper {
+      position: absolute;
+      bottom: 60px;
+      width: 100%;
+      height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Marco/Tarjeta estilizada */
+    .car-card {
+      position: absolute;
+      bottom: 0;
+      width: 115px; /* Tamaño ajustado para que no estorbe */
+      height: 180px;
+      background: #0f172a;
+      border: 2px solid #2563eb;
+      border-radius: 10px;
+      padding: 6px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hover para enfocar cada carrito */
+    .car-card:hover {
+      transform: scale(1.15) translateY(-20px) rotate(0deg) !important;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
+      border-color: #60a5fa;
+      z-index: 10 !important;
+    }
+
+    /* IMAGEN COMPLETA SIN AGRANDAR NI RECORTAR */
+    .car-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Ajusta la imagen completa respetando su tamaño */
+      border-radius: 6px;
+      background-color: #0b0f19;
+    }
+
+    /* Posición y separación amplia en abanico */
+    .c1 {
+      transform: translateX(-70px) rotate(-18deg) translateY(-20px);
+      z-index: 1;
+    }
+    .c2 {
+      transform: translateY(-45px);
+      z-index: 2;
+    }
+    .c3 {
+      transform: translateX(70px) rotate(18deg) translateY(-20px);
+      z-index: 1;
+    }
+
+    /* Envoltura trasera */
+    .wrap-back {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-bottom: 180px solid #0f172a;
+      z-index: 0;
+    }
+
+    /* Envoltura frontal (Cono del ramo) */
+    .wrap-front {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 95px solid transparent;
+      border-right: 95px solid transparent;
+      border-bottom: 130px solid #1e293b;
+      z-index: 3;
+      filter: drop-shadow(0 -4px 10px rgba(0,0,0,0.7));
+    }
+
+    .wrap-fold {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border-left: 70px solid transparent;
+      border-right: 70px solid transparent;
+      border-bottom: 100px solid #253346;
+      z-index: 4;
+    }
+
+    /* Cinta azul */
+    .wrap-ribbon {
+      position: absolute;
+      bottom: 40px;
+      width: 100px;
+      height: 16px;
+      background: linear-gradient(90deg, #0052cc, #2563eb, #0052cc);
+      border-radius: 8px;
+      z-index: 5;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
+    }
+
+    /* Botón */
+    .card-button {
+      background: linear-gradient(45deg, #006aff, #d946ef);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 106, 255, 0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card-button:active {
+      transform: scale(0.96);
+    }
+
+    /* Nota secreta */
+    .note {
+      max-width: 350px;
+      background: var(--card-bg);
+      border: 1px solid #334155;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>UN RAMO ESPECIAL PARA CHUPETEE</h1>
+  <p class="subtitle">Porque las flores comunes no van contigo</p>
+
+  <div class="bouquet-container">
+    <!-- Envoltura de fondo -->
+    <div class="wrap-back"></div>
+
+    <!-- Tarjetas separadas en abanico -->
+    <div class="cards-wrapper">
+      <div class="car-card c1">
+        <img src="https://i.ibb.co/VpTLrrdd/image.jpg" class="car-image" alt="Hot Wheels 1">
+      </div>
+      <div class="car-card c2">
+        <img src="https://i.ibb.co/NdFCXbjd/image.jpg" class="car-image" alt="Hot Wheels 2">
+      </div>
+      <div class="car-card c3">
+        <img src="https://i.ibb.co/0jM37N9V/image.jpg" class="car-image" alt="Hot Wheels 3">
+      </div>
+    </div>
+
+    <!-- Cono frontal del ramo -->
+    <div class="wrap-front"></div>
+    <div class="wrap-fold"></div>
+    <div class="wrap-ribbon"></div>
+  </div>
+
+  <button class="card-button" onclick="toggleNote()">Abre el mensajito</button>
+
+  <div class="note" id="secretNote">
+    <p>Espero que te guste este ramo pequeñito ya no te veo pero creo que igual lo mereces</p>
+    <br>
+    <p>eres el niño mas lindo espero que te encuentres bien y Dios te bendiga</p>
+    <br>
+    <p>Un detalle hecho a medida con puro código muaaaak TE QUIERO.</p>
+  </div>
+
+  <script>
+    function toggleNote() {
+      const note = document.getElementById('secretNote');
+      note.style.display = (note.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>
